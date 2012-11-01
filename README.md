@@ -25,3 +25,7 @@
 ### Logging
 
 ### Debugging
+
+# COLLABORATORS
+
+* Gabriele Lana
