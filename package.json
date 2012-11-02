@@ -1,0 +1,25 @@
+{
+  "name": "njsw2012",
+  "version": "0.0.0",
+  "description": "the best conference in the world",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/cleancode/njsw2012.git"
+  },
+  "dependencies": {
+    "mocha": "~1.6.0",
+    "expect.js": "~0.2.0",
+    "underscore": "~1.4.2",
+    "async": "~0.1.22",
+    "rimraf": "~2.0.2",
+    "mkdirp": "~0.3.4",
+    "glob": "~3.1.14"
+  },
+  "author": "Gabriele Lana <gabriele.lana@cleancode.it>",
+  "license": "BSD",
+  "readmeFilename": "README.md"
+}
