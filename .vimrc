@@ -1,5 +1,7 @@
 " vimrc for njsw 
 
+let g:is_posix = 1
+
 let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': ['javascript'] }
 
 let g:ctrlp_show_hidden = 1
