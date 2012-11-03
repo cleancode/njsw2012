@@ -4,11 +4,13 @@ var spawn = require("child_process").spawn,
 
 var master = module.exports = (function(master) {
   master.run = function(numberOfWorkers) {
-    return _(es.through()).tap(function(output) {
-      _(numberOfWorkers || 6).times(function() {
-        spawn("./bin/1kl.sh").stdout.pipe(output)
+    var streams = _(numberOfWorkers || 6).chain()
+      .range()
+      .map(function() {
+        return spawn("./bin/1kl.sh").stdout
       })
-    })
+      .value()
+    return es.merge.apply(es, streams)
   }
   return master
 })({})
