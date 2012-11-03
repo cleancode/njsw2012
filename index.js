@@ -1,5 +1,6 @@
 var spawn = require("child_process").spawn,
     es = require("event-stream"),
+    split = require("./lib/split-stream"),
     _ = require("underscore")
 
 var master = module.exports = (function(master) {
@@ -7,7 +8,7 @@ var master = module.exports = (function(master) {
     var streams = _(numberOfWorkers || 6).chain()
       .range()
       .map(function() {
-        return spawn("./bin/1kl.sh").stdout
+        return spawn("./bin/1kl.sh").stdout.pipe(split())
       })
       .value()
     return es.merge.apply(es, streams)
