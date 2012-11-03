@@ -17,7 +17,7 @@
     "latedef": true,
     "immed": true,
     "undef": true,
-    "unused": true,
+    "unused": false,
     "trailing": true,
     "funcscope": true,
     "sub": true
