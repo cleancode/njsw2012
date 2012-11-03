@@ -19,7 +19,7 @@ describe("split", function() {
 
     it("should emit a line when input is a line", function(done) {
       this.stream.pipe(es.writeArray(function(error, lines) {
-        expect(lines).to.eql(["aaa\n"])
+        expect(lines).to.eql(["aaa"])
         done()
       }))
 
@@ -29,7 +29,7 @@ describe("split", function() {
 
     it("should not emit a line until newline if found", function(done) {
       this.stream.pipe(es.writeArray(function(error, lines) {
-        expect(lines).to.eql(["aaa\n"])
+        expect(lines).to.eql(["aaa"])
         done()
       }))
 
@@ -43,7 +43,7 @@ describe("split", function() {
 
     it("should emit 2 lines when input contains a newline", function(done) {
       this.stream.pipe(es.writeArray(function(error, lines) {
-        expect(lines).to.eql(["aaa\n", "bbb\n"])
+        expect(lines).to.eql(["aaa", "bbb"])
         done()
       }))
 
@@ -53,7 +53,7 @@ describe("split", function() {
 
     it("should emit last characters as a line", function(done) {
       this.stream.pipe(es.writeArray(function(error, lines) {
-        expect(lines).to.eql(["aaa\n", "bbb\n", "c\n"])
+        expect(lines).to.eql(["aaa", "bbb", "c"])
         done()
       }))
 
