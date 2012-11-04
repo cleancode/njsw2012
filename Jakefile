@@ -16,9 +16,9 @@ task("default", ["test"])
 
 desc("run all tests")
 task("test", ["prepare"], {async: true}, function() {
-  exec("mocha -c test/*.js", function(error, stdout, stderr) {
+  exec("mocha -c --recursive test/", function(error, stdout, stderr) {
     process.stdout.write(stdout)
-    if (stderr.length > 0) console.err(stderr)
+    if (stderr.length > 0) console.error(stderr)
     if (error !== null) fail(error)
   })
 })
