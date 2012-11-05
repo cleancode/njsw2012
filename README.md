@@ -43,3 +43,7 @@ Clean working copy
 * .foreverignore = files ignored by forever
 * .vimrc = vim project configuration (need to have vim-addon-local-vimrc plugin installed)
 * .work/ = work directory created by 'jake prepare' for temporary/disposable files
+
+# NOTES
+
+* sockjs-client close method is sync/async based on transport see test/acceptance/events.js
