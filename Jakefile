@@ -1,13 +1,15 @@
 var fs = require("fs"),
+    glob = require("glob"),
+    util = require("util"),
     path = require("path"),
     async = require("async"),
     exec = require("child_process").exec,
-    glob = require("glob"),
-    util = require("util"),
+    configure = require("./lib/configure"),
     _ = require("underscore")
 
 var PROJECT = _({}).tap(function(PROJECT) {
   PROJECT.root_directory = path.normalize(__dirname)
+  PROJECT.lib_directory = path.join(PROJECT.root_directory, "lib")
   PROJECT.work_directory = path.join(PROJECT.root_directory, ".work")
   PROJECT.logs_directory = path.join(PROJECT.work_directory, "logs")
 })
@@ -15,11 +17,29 @@ var PROJECT = _({}).tap(function(PROJECT) {
 task("default", ["test"])
 
 desc("run all tests")
-task("test", ["prepare"], {async: true}, function() {
-  exec("mocha -c test/*.js", function(error, stdout, stderr) {
+task("test", ["unit", "acceptance"])
+
+desc("run all unit tests")
+task("unit", ["prepare"], {async: true}, function() {
+  exec("mocha -c test/unit", function(error, stdout, stderr) {
     process.stdout.write(stdout)
-    if (stderr.length > 0) console.err(stderr)
+    if (stderr.length > 0) console.error(stderr)
     if (error !== null) fail(error)
+    complete()
+  })
+})
+
+desc("run all acceptance tests")
+task("acceptance", ["prepare"], {async: true}, function() {
+  process.env.NODE_ENV = "test"
+  require("./server").start(function(shover) {
+    exec("mocha -c test/acceptance", function(error, stdout, stderr) {
+      shover.close()
+      process.stdout.write(stdout)
+      if (stderr.length > 0) console.error(stderr)
+      if (error !== null) fail(error)
+      complete()
+    })
   })
 })
 
@@ -27,6 +47,44 @@ desc("remove all created files")
 task("clean", {async: true}, function() {
   fs.rmrfdir = require("rimraf")
   fs.rmrfdir(PROJECT.work_directory, complete)
+})
+
+function forever(command, service) {
+  switch (command) {
+    case "list":
+      return "forever list"
+    case "stopall":
+      return "forever stopall"
+    case "start":
+      switch (service) {
+        case "shover":
+          return util.format(
+            "forever start -a -o %s -e %s --watch=true server.js",
+            path.join(PROJECT.logs_directory, "shower-stdout.log"),
+            path.join(PROJECT.logs_directory, "shower-stderr.log")
+          )
+      }
+  }
+}
+
+desc("start server with all dependencies")
+task("start", ["prepare"], {async: true}, function() {
+  exec([forever("start", "shover"), forever("list")].join(";"), function(error, stdout, stderr) {
+    process.stdout.write(stdout)
+    if (stderr.length > 0) console.error(stderr)
+    if (error !== null) fail(error)
+    complete()
+  })
+})
+
+desc("stop server and all dependencies")
+task("stop", {async: true}, function() {
+  exec([forever("stopall"), forever("list")].join(";"), function(error, stdout, stderr) {
+    process.stdout.write(stdout)
+    if (stderr.length > 0) console.error(stderr)
+    if (error !== null) fail(error)
+    complete()
+  })
 })
 
 desc("prepare work environment")
@@ -43,8 +101,8 @@ task("prepare", ["check", "lint"], {async: true}, function() {
 }, true)
 
 desc("check external and global dependencies")
-task("check", function() {
-  jake.exec(["which jshint", "which mocha"], {async: true}, complete)
+task("check", {async: true}, function() {
+  jake.exec(["which jshint", "which mocha", "which forever"], complete)
 })
 
 desc("lint all files")

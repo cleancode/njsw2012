@@ -1,10 +1,10 @@
 {
-  "name": "njsw2012",
+  "name": "njsw2012-shover",
   "version": "0.0.0",
-  "description": "the best conference in the world",
-  "main": "index.js",
+  "description": "simplest clone of pusher.com",
+  "main": "server.js",
   "scripts": {
-    "test": "mocha"
+    "test": "jake"
   },
   "repository": {
     "type": "git",
@@ -17,7 +17,11 @@
     "async": "~0.1.22",
     "rimraf": "~2.0.2",
     "mkdirp": "~0.3.4",
-    "glob": "~3.1.14"
+    "glob": "~3.1.14",
+    "connect": "~2.6.2",
+    "urlrouter": "~0.2.3",
+    "js-yaml": "~1.0.2",
+    "supertest": "~0.4.0"
   },
   "author": "Gabriele Lana <gabriele.lana@cleancode.it>",
   "license": "BSD",
