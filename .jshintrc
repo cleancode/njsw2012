@@ -2,11 +2,13 @@
     "globals": {
         "it": false,
         "console": false,
+        "process": false,
         "describe": false,
         "expect": true,
         "beforeEach": false,
         "afterEach": false,
-        "spyOn": false
+        "before": false,
+        "after": false
     },
     "node": true,
     "browser": true,
@@ -17,7 +19,7 @@
     "latedef": true,
     "immed": true,
     "undef": true,
-    "unused": true,
+    "unused": false,
     "trailing": true,
     "funcscope": true,
     "sub": true

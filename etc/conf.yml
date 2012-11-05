@@ -1,0 +1,23 @@
+test:
+    env: test
+    http:
+        host: localhost
+        port: 9001
+
+development:
+    env: development
+    http:
+        host: localhost
+        port: 9000
+
+staging:
+    env: staging
+    http:
+        host: localhost
+        port: 9001
+
+production:
+    env: production
+    http:
+        host: localhost
+        port: 9000
