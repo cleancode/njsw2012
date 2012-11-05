@@ -17,7 +17,7 @@
 * use the keyboard Luke: i3, vim (shell plugin), vimium
 
 
-# 2 - DNA - branch/streams (10:30 - 12:30) - G
+# 2 - DNA - branch/streams (10:30 - 12:30) - G/F
 
 * EventEmitter, Stream, Buffer, Process, Socket are the building blocks of Node.js and also of Unix
 * Jed Schmidt @ JSConf.eu "streams are to time as arrays are to space"
@@ -26,23 +26,26 @@
 * CTM ch 4.3
 * look at the Stream.pipe implementation
 * look at https://github.com/dominictarr/stream-spec/blob/master/states.markdown
-* RESOURCES:
-    * http://nodejs.org/api/stream.html
-    * https://github.com/substack/stream-handbook
-    * https://github.com/dominictarr/stream-spec
-    * https://github.com/dominictarr/event-stream - study the code
-    * https://github.com/dominictarr/stream-serializer - study the code
-    * https://github.com/dominictarr/mux-demux - study the code
-    * https://github.com/joyent/node :-)
-* EXERCIZE:
-    * initial problem, wrong number of lines and wrong number of lines length in output
-    * correct number of lines in output
-    * correct length of lines in output
-    * append stream
-    * more style
-* NOTES:
-    * streams don't start until the current coroutine has ended
-    * in the second commit of the exercize look at the es.merge/es.concat implementation
+* Stream
+    * RESOURCES:
+        * http://nodejs.org/api/stream.html
+        * https://github.com/substack/stream-handbook
+        * https://github.com/dominictarr/stream-spec
+        * https://github.com/dominictarr/event-stream - study the code
+        * https://github.com/dominictarr/stream-serializer - study the code
+        * https://github.com/dominictarr/mux-demux - study the code
+        * https://github.com/joyent/node :-)
+    * EXERCIZE:
+        * initial problem, wrong number of lines and wrong number of lines length in output
+        * correct number of lines in output
+        * correct length of lines in output
+        * append stream
+        * more style
+    * NOTES:
+        * streams don't start until the current coroutine has ended
+        * in the second commit of the exercize look at the es.merge/es.concat implementation
+* EventEmitter
+    * Pop quiz by Federico Galassi
 
 
 # 3 - SHOVER - branch/shover (12:30 - 13:30 + 14:30 - 15:30) - G
