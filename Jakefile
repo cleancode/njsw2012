@@ -49,24 +49,6 @@ task("clean", {async: true}, function() {
   fs.rmrfdir(PROJECT.work_directory, complete)
 })
 
-function forever(command, service) {
-  switch (command) {
-    case "list":
-      return "forever list"
-    case "stopall":
-      return "forever stopall"
-    case "start":
-      switch (service) {
-        case "shover":
-          return util.format(
-            "forever start -a -o %s -e %s --watch=true server.js",
-            path.join(PROJECT.logs_directory, "shower-stdout.log"),
-            path.join(PROJECT.logs_directory, "shower-stderr.log")
-          )
-      }
-  }
-}
-
 desc("start server with all dependencies")
 task("start", ["prepare"], {async: true}, function() {
   exec([forever("start", "shover"), forever("list")].join(";"), function(error, stdout, stderr) {
@@ -119,3 +101,22 @@ task("lint", {async: true}, function() {
     }
   )
 })
+
+
+function forever(command, service) {
+  switch (command) {
+    case "list":
+      return "forever list"
+    case "stopall":
+      return "forever stopall"
+    case "start":
+      switch (service) {
+        case "shover":
+          return util.format(
+            "forever start -a -o %s -e %s --watch=true server.js",
+            path.join(PROJECT.logs_directory, "shower-stdout.log"),
+            path.join(PROJECT.logs_directory, "shower-stderr.log")
+          )
+      }
+  }
+}
