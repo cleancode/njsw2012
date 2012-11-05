@@ -7,4 +7,15 @@ describe("acme", function() {
       .get("/hello")
       .expect(200, "world", done)
   })
+
+  describe("store", function() {
+    it("should have one", function(done) {
+      request(acme)
+        .get("/store")
+        .expect(200, "world")
+        .expect("Content-Type", /text\/html/)
+        .expect(/Acme Store/, done)
+    })
+  })
+
 })
