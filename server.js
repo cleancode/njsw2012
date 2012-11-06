@@ -28,6 +28,17 @@ exports.start = function(callback) {
 
               shover.broadcast(req.body)
             })
+
+            app.get("/user/:id", function(req, res) {
+              var connection = shover.connection(req.params.id)
+              if (connection) {
+                res.writeHead(200, {"Content-Type": "application/json"})
+                res.end(JSON.stringify({connection: connection.id}))
+                return
+              }
+              res.writeHead(404)
+              res.end()
+            })
           }))
 
     _(["SIGINT", "SIGQUIT", "SIGKILL"]).each(function(signal) {
