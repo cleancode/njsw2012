@@ -47,7 +47,7 @@ describe("shover", function() {
         done()
       })
       this.request.post("/events")
-        .set('Content-Type', 'application/json')
+        .set("Content-Type", "application/json")
         .send(this.event)
         .expect(202)
         .end(this.noop)

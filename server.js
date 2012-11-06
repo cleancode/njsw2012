@@ -29,6 +29,13 @@ exports.start = function(callback) {
               shover.broadcast(req.body)
             })
 
+            app.post("/channel/:name/events", function(req, res) {
+              res.writeHead(202)
+              res.end()
+
+              shover.channel(req.params.name).send(req.body)
+            })
+
             app.get("/user/:id", function(req, res) {
               var connection = shover.connection(req.params.id)
               if (connection) {

@@ -47,3 +47,4 @@ Clean working copy
 # NOTES
 
 * sockjs-client close method is sync/async based on transport see test/acceptance/events.js
+* instead of arrays and objects for data structures consider to use in memory db like sqlite
