@@ -13,8 +13,8 @@
 * tools: vim (local vim), zsh, nvm/npm, and dotfiles
 * immediate feedback: syntastic, notifications and informative workspace (execute spec inside vim)?
 * specifications: mocha and expect
-* build automation: jake, something like foreman? deploy?
-* use the keyboard Luke: i3, vim (shell plugin), vimium
+* build automation: jake, forever
+* use the keyboard Luke: vim (shell plugin), vimium
 
 
 # 2 - DNA - branch/streams (10:30 - 12:30) - G/F
@@ -45,29 +45,28 @@
         * streams don't start until the current coroutine has ended
         * in the second commit of the exercize look at the es.merge/es.concat implementation
 * EventEmitter
-    * Pop quiz by Federico Galassi
+    * pop quiz by Federico Galassi
+    * sockjs-client close method is sync/async based on transport see test/acceptance/events.js
 
 
 # 3 - SHOVER - branch/shover (12:30 - 13:30 + 14:30 - 15:30) - G
 
+* walking skeleton for an HTTP server: how to test/organize code for HTTP server
+* first message on socket: challenge of a three asynchronous actors for an acceptance test
+* modularize shover: never forget refactoring
+* command identify on socket: exercize with async
+* command subscribe and unsubscribe on socket
+* channels on redis: shover synchronous interface, gets in the way
+* simulator
+* how to scale horizontally?
+* deploy?
+
+
+# 4 - ACME - branch/acme (15:30 - 17:30) - F
+
 * ?
 
 
-# 4 - ACME - branch/acme (15:30 - 16:30) - F
-
-* ?
-
-
-# 5 - PRODUCTION - branch/production (16:30 - 17:30) - F
-
-* deployment
-* error checking
-* monitoring
-* performance
-* logging
-* debugging
-
-
-# 6 - Q/A (17:30 - 18:30) - F
+# 5 - Q/A (17:30 - 18:30) - F
 
 * ?
