@@ -10,6 +10,7 @@ var fs = require("fs"),
 var PROJECT = _({}).tap(function(PROJECT) {
   PROJECT.root_directory = path.normalize(__dirname)
   PROJECT.lib_directory = path.join(PROJECT.root_directory, "lib")
+  PROJECT.etc_directory = path.join(PROJECT.root_directory, "etc")
   PROJECT.work_directory = path.join(PROJECT.root_directory, ".work")
   PROJECT.logs_directory = path.join(PROJECT.work_directory, "logs")
 })
@@ -44,24 +45,26 @@ task("acceptance", ["prepare"], {async: true}, function() {
 })
 
 desc("remove all created files")
-task("clean", {async: true}, function() {
+task("clean", ["stop"], {async: true}, function() {
   fs.rmrfdir = require("rimraf")
   fs.rmrfdir(PROJECT.work_directory, complete)
 })
 
 desc("start server with all dependencies")
 task("start", ["prepare"], {async: true}, function() {
-  exec([forever("start", "shover"), forever("list")].join(";"), function(error, stdout, stderr) {
-    process.stdout.write(stdout)
-    if (stderr.length > 0) console.error(stderr)
-    if (error !== null) fail(error)
-    complete()
+  configure("./etc/conf.yml", function(conf) {
+    exec(forever(["start redis", "start shover", "list"], conf), function(error, stdout, stderr) {
+      process.stdout.write(stdout)
+      if (stderr.length > 0) console.error(stderr)
+      if (error !== null) fail(error)
+      complete()
+    })
   })
 })
 
 desc("stop server and all dependencies")
 task("stop", {async: true}, function() {
-  exec([forever("stopall"), forever("list")].join(";"), function(error, stdout, stderr) {
+  exec(forever(["stopall", "list"]), function(error, stdout, stderr) {
     process.stdout.write(stdout)
     if (stderr.length > 0) console.error(stderr)
     if (error !== null) fail(error)
@@ -102,21 +105,37 @@ task("lint", {async: true}, function() {
   )
 })
 
+jake.on("complete", function() {
+  process.exit(0)
+})
 
-function forever(command, service) {
-  switch (command) {
-    case "list":
-      return "forever list"
-    case "stopall":
-      return "forever stopall"
-    case "start":
-      switch (service) {
-        case "shover":
-          return util.format(
-            "forever start -a -o %s -e %s --watch=true server.js",
-            path.join(PROJECT.logs_directory, "shower-stdout.log"),
-            path.join(PROJECT.logs_directory, "shower-stderr.log")
-          )
-      }
-  }
+function forever(commands, conf) {
+  return _([].concat(commands)).map(function(command) {
+    var tokens = command.split(/\s+/),
+        action = tokens.shift(),
+        service = tokens.shift()
+
+    switch (action) {
+      case "list":
+        return "forever list"
+      case "stopall":
+        return "forever stopall"
+      case "start":
+        switch (service) {
+          case "shover":
+            return util.format(
+              "forever start -a -o %s -e %s --watch=true server.js",
+              path.join(PROJECT.logs_directory, "shower-stdout.log"),
+              path.join(PROJECT.logs_directory, "shower-stderr.log")
+            )
+          case "redis":
+            return util.format(
+              "forever start -a -o %s -e %s -c redis-server %s",
+              path.join(PROJECT.logs_directory, "redis-stdout.log"),
+              path.join(PROJECT.logs_directory, "redis-stderr.log"),
+              path.join(PROJECT.etc_directory, conf.redis.conf)
+            )
+        }
+    }
+  }).join("; ")
 }

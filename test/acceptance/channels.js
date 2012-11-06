@@ -3,6 +3,7 @@ var request = require("supertest"),
     sockjs = require("sockjs-client"),
     configure = require("../../lib/configure"),
     util = require("util"),
+    uuid = require("node-uuid"),
     path = require("path"),
     _ = require("underscore")
 
@@ -11,7 +12,7 @@ describe("shover", function() {
   describe("on socket", function() {
     describe("identify", function() {
       it("should bind a channel to an user", function(done) {
-        var mocha = this, userId = "5098ba6d3567d3c608be1dc1"
+        var mocha = this, userId = uuid()
 
         mocha.request.get("/user/" + userId)
           .expect(404)
@@ -21,7 +22,6 @@ describe("shover", function() {
               mocha.request.get("/user/" + userId)
                 .expect(200)
                 .end(function(err, res) {
-                  expect(res.body).to.have.property("connection")
                   done()
                 })
             })
@@ -30,7 +30,7 @@ describe("shover", function() {
       })
 
       it("should unbind on disconnect", function(done) {
-        var mocha = this, userId = "5098ba6d3567d3c608be1dc1"
+        var mocha = this, userId = uuid()
 
         mocha.client.on("data", function(response) {
           mocha.client.on("close", function() {

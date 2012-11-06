@@ -25,26 +25,25 @@ exports.start = function(callback) {
             app.post("/events", function(req, res) {
               res.writeHead(202)
               res.end()
-
               shover.broadcast(req.body)
             })
 
             app.post("/channel/:name/events", function(req, res) {
               res.writeHead(202)
               res.end()
-
               shover.channel(req.params.name).send(req.body)
             })
 
             app.get("/user/:id", function(req, res) {
-              var connection = shover.connection(req.params.id)
-              if (connection) {
-                res.writeHead(200, {"Content-Type": "application/json"})
-                res.end(JSON.stringify({connection: connection.id}))
-                return
-              }
-              res.writeHead(404)
-              res.end()
+              shover.connection(req.params.id, function(error, connection) {
+                if (connection && connection.id) {
+                  res.writeHead(200, {"Content-Type": "application/json"})
+                  res.end(JSON.stringify({connection: connection.id}))
+                } else {
+                  res.writeHead(404)
+                  res.end()
+                }
+              })
             })
           }))
 
@@ -56,8 +55,12 @@ exports.start = function(callback) {
     })
 
     app.listen(conf.http.port, function() {
-      shover.attachTo(this)
-      app.close = _(this.close).bind(this)
+      var server = this
+      shover.attachTo(server)
+      app.close = function() {
+        server.close()
+        shover.reset()
+      }
       if (_(callback).isFunction()) {
         callback(app)
       }
