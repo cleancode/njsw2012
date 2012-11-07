@@ -61,20 +61,13 @@ describe("acme store ui", function() {
 
 Browser.prototype.isGradeA = function() {
   var browser = this
-  browser.on("response", function(res, target) {
+  browser.on("evaluated", function(code) {
     var window = browser.window
     var document = browser.document
-    var onMobileInitMakeGradeA = function() {
-      if (window.$) {
-        window.$(document).on("mobileinit", function() {
-          window.$.mobile.gradeA = function() { return true }
-        })
-      } else {
-        process.nextTick(onMobileInitMakeGradeA)
-      }
-    }
-    if (res.url.match(/mobile/)) {
-      onMobileInitMakeGradeA()
+    if (typeof code === "string" && code.match(/jQuery JavaScript/)) {
+      window.$(document).on("mobileinit", function() {
+        window.$.mobile.gradeA = function() { return true }
+      })
     }
   })
 }
