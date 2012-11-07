@@ -1,5 +1,8 @@
-var acme = require("../../lib/acme")
+process.env.NODE_ENV = "test"
+
+var acme = require("../../lib/acme")()
 var request = require("supertest")
+
 
 describe("acme", function() {
   it("should say hello world", function(done) {

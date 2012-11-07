@@ -1,0 +1,11 @@
+.success {
+    color: green;
+}
+
+.failure {
+    color: red;
+}
+
+.button_container {
+    text-align: center;
+}

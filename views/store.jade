@@ -1,6 +1,58 @@
-doctype
-html
-  head
-    title Acme Store
-  body
-    h1 Acme Store
+extends layout
+
+
+mixin page(name, title)
+  div(id=name, data-role='page')
+    div(data-role='header', data-position='fixed')
+      h1= title
+    div(data-role='content')
+      block
+    div.button_container(data-role='footer')
+      | copyright #{new Date().getFullYear()} - Acme
+
+
+block append styles
+  link(rel='stylesheet', href='/styles/acme-store.css')
+
+block append scripts
+  script(type='text/javascript', src='/scripts/acme-store.js')
+
+block content
+  +page('buy', 'Buy Acme Music !')
+    ul(data-role='listview')
+      each album in albums
+        li
+          a.album_choose(href='#',
+            data-code=album.code,
+            data-title=album.title,
+            data-pricetag='#{album.price} #{album.currency}' 
+          )
+            img(src='/images/store/#{album.cover}')
+            h3.album_title= album.title
+            p.album_author= album.author
+            p
+              span.album_price= album.price
+              span.album_currency=  album.currency
+
+  +page('pay', 'Pay Acme Music !')
+    ul(data-role='listview', data-inset='true', data-theme='d')
+      li
+        h2.pay_description Pay
+    div.button_container
+      form.pay_form(data-ajax='false')
+        input.pay_code(type='hidden', name='code')
+        input.pay_button(data-role='none', type='image', name='button', src='/images/store/buy.jpg')
+
+  +page('thankyou', 'Thank You!')
+    ul(data-role='listview', data-inset='true', data-theme='d')
+      li
+        h2.success Successful Purchase!
+    div.button_container
+      img(src='/images/store/thankyou.jpg')
+
+  +page('sorry', 'We\'re sorry !')
+    ul(data-role='listview', data-inset='true', data-theme='d')
+      li
+        h2.failure Sorry, Purchase Failed !
+    div.button_container
+      img(src='/images/store/sorry.jpg')

@@ -1,0 +1,92 @@
+{
+    "albums": [
+        {
+            "title": "Broken Bells",
+            "author": "Broken Bells",
+            "cover": "album-bb.jpg",
+            "price": 29.90,
+            "currency": "EUR",
+            "code": "1001"
+        },
+        {
+            "title": "Warning",
+            "author": "Hot Chip",
+            "cover": "album-hc.jpg",
+            "price": 24.50,
+            "currency": "EUR",
+            "code": "1002"
+        },
+        {
+            "title": "Wolfgang Amadeus Phoenix",
+            "author": "Phoenix",
+            "cover": "album-p.jpg",
+            "price": 29.90,
+            "currency": "EUR",
+            "code": "1003"
+        },
+        {
+            "title": "Of The Blue Colour Of The Sky",
+            "author": "Ok Go",
+            "cover": "album-ok.jpg",
+            "price": 21.00,
+            "currency": "EUR",
+            "code": "1004"
+        },
+        {
+            "title": "Elephant",
+            "author": "The White Stripes",
+            "cover": "album-ws.jpg",
+            "price": 24.50,
+            "currency": "EUR",
+            "code": "1005"
+        },
+        {
+            "title": "Kid A",
+            "author": "Radiohead",
+            "cover": "album-rh.jpg",
+            "price": 29.90,
+            "currency": "EUR",
+            "code": "1006"
+        },
+        {
+            "title": "XX",
+            "author": "XX",
+            "cover": "album-xx.jpg",
+            "price": 29.90,
+            "currency": "EUR",
+            "code": "1007"
+        },
+        {
+            "title": "Congratulations",
+            "author": "MGMT",
+            "cover": "album-mg.jpg",
+            "price": 24.50,
+            "currency": "EUR",
+            "code": "1008"
+        },
+        {
+            "title": "Ashes Grammar",
+            "author": "A Sunny Day in Glasgow",
+            "cover": "album-ag.jpg",
+            "price": 29.90,
+            "currency": "EUR",
+            "code": "1009"
+        },
+        {
+            "title": "Hot Fuss",
+            "author": "Killers",
+            "cover": "album-k.jpg",
+            "price": 24.50,
+            "currency": "EUR",
+            "code": "1010"
+        },
+        {
+            "title": "The Suburbs",
+            "author": "Arcade Fire",
+            "cover": "album-af.jpg",
+            "price": 15,
+            "currency": "EUR",
+            "code": "1011"
+        }
+    ]
+}
