@@ -1,7 +1,7 @@
 # 0 - WELCOME (09:30 - 10:00) - F+G
 
 * disclaimer: this is our way, not a good one, not bad one, but a way that works for us
-* what a would like to see/do in a workshop and why?
+* what I would like to see/do in a workshop and why?
 * agenda
 * networking: what do you know about node.js, why, and what do you like to do in the future with node.js
 * setup working environment
@@ -70,3 +70,17 @@
 # 5 - Q/A (17:30 - 18:30) - F
 
 * ?
+
+
+# NOTES
+
+* repositories with good code
+    * https://github.com/dominictarr
+    * https://github.com/visionmedia 
+    * https://github.com/substack
+    * https://github.com/isaacs
+    * https://github.com/felixge
+    * https://github.com/dshaw
+    * https://github.com/LearnBoost
+    * https://github.com/joyent
+    * https://github.com/nodejitsu
