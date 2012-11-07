@@ -12,13 +12,14 @@ describe("acme store ui", function() {
 
     this.browser.isGradeA()
     this.browser.waitDuration = 500
+    //this.browser.debug = true
   })
 
   afterEach(function(done) {
     this.server.close(done)
   })
 
-  xit("should make people successfully buy albums", function(done) {
+  it("should make people successfully buy albums", function(done) {
     var browser = this.browser
     browser.visit("http://localhost:9001/store", function() {
       expect(browser).to.have.activePage("#buy")
@@ -33,7 +34,7 @@ describe("acme store ui", function() {
     })
   })
 
-  xit("should say sorry if they can't buy", function(done) {
+  it("should say sorry if they can't buy", function(done) {
     var browser = this.browser
     browser.visit("http://localhost:9001/store", function() {
       expect(browser).to.have.activePage("#buy")
