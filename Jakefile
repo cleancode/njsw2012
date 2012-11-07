@@ -52,7 +52,7 @@ task("clean", ["stop"], {async: true}, function() {
 
 desc("start server with all dependencies")
 task("start", ["prepare"], {async: true}, function() {
-  configure("./etc/conf.yml", function(conf) {
+  configure("./etc/conf.yml", function(err, conf) {
     exec(forever(["start redis", "start shover", "list"], conf), function(error, stdout, stderr) {
       process.stdout.write(stdout)
       if (stderr.length > 0) console.error(stderr)

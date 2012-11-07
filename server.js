@@ -7,7 +7,7 @@ var connect = require("connect"),
 
 
 exports.start = function(callback) {
-  configure("./etc/conf.yml", function(conf) {
+  configure("./etc/conf.yml", function(err, conf) {
 
     var shover = new Shover(conf),
         app = connect()

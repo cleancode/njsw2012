@@ -20,7 +20,7 @@ describe("shover", function() {
 
   before(function(done) {
     var mocha = this
-    configure("../../etc/conf.yml", function(conf) {
+    configure("../../etc/conf.yml", function(err, conf) {
       mocha.request = request(util.format("http://%s:%d", conf.http.host, conf.http.port))
       mocha.conf = conf
       done()

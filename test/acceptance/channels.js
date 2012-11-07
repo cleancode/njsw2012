@@ -18,7 +18,9 @@ describe("shover", function() {
           .expect(404)
           .end(function(err, res) {
             mocha.client.on("data", function(response) {
-              expect(JSON.parse(response)).to.be.eql({result: "ok"})
+              response = JSON.parse(response)
+              expect(response).to.have.property("command", "identify")
+              expect(response).to.have.property("result", "ok")
               mocha.request.get("/user/" + userId)
                 .expect(200)
                 .end(function(err, res) {
@@ -50,8 +52,11 @@ describe("shover", function() {
 
         // NOTE: the use of once
         mocha.client.once("data", function(response) {
-          mocha.client.once("data", function(event) {
-            expect(JSON.parse(event)).to.be.eql(mocha.news.event)
+          mocha.client.once("data", function(message) {
+            message = JSON.parse(message)
+            expect(message).to.have.property("channel", "news")
+            expect(message).to.have.property("event")
+            expect(message.event).to.be.eql(mocha.news)
             done()
           })
           mocha.request.post("/channel/news/events/")
@@ -83,10 +88,8 @@ describe("shover", function() {
 
       before(function() {
         this.news = {
-          event: {
-            title: "Node.js Conference in Brescia",
-            body: "The best conference in the world held right now in Brescia (IT)"
-          }
+          title: "Node.js Conference in Brescia",
+          body: "The best conference in the world held right now in Brescia (IT)"
         }
       })
     })
@@ -94,7 +97,7 @@ describe("shover", function() {
 
   before(function(done) {
     var mocha = this
-    configure("../../etc/conf.yml", function(conf) {
+    configure("../../etc/conf.yml", function(err, conf) {
       mocha.noop = function() {}
       mocha.baseurl = util.format("http://%s:%d", conf.http.host, conf.http.port)
       mocha.request = request(mocha.baseurl)
