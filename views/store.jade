@@ -4,15 +4,21 @@ extends layout
 mixin page(name, title)
   div(id=name, data-role='page')
     div(data-role='header', data-position='fixed')
-      h1= title
+      h1
+        +flag(country.code)
+        | #{title}
+        +flag(country.code)
     div(data-role='content')
       block
     div.button_container(data-role='footer')
       | copyright #{new Date().getFullYear()} - Acme
 
+mixin flag(country)
+  div.flag(class='flag flag-#{country.toLowerCase()}')
 
 block append styles
   link(rel='stylesheet', href='/styles/acme-store.css')
+  link(rel='stylesheet', href='/styles/flags.css')
 
 block append scripts
   script(type='text/javascript', src='/scripts/acme-store.js')

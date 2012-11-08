@@ -1,5 +1,4 @@
 process.env.NODE_ENV = "test"
-
 var acme = require("../../lib/acme")()
 var request = require("supertest")
 
@@ -14,7 +13,7 @@ describe("acme", function() {
   describe("store", function() {
     it("should have one", function(done) {
       request(acme)
-        .get("/store")
+        .get("/us/store")
         .expect(200, "world")
         .expect("Content-Type", /text\/html/)
         .expect(/Acme Store/, done)

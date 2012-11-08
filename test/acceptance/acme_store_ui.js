@@ -22,7 +22,7 @@ describe("acme store ui", function() {
   it("should make people successfully buy albums", function(done) {
     var browser = this.browser
     browser
-      .visit("http://localhost:9001/store")
+      .visit("http://localhost:9001/us/store")
       .then(function() {
         expect(browser).to.have.activePage("#buy")
         expect(browser).to.have.manyAlbums(11)
@@ -41,7 +41,7 @@ describe("acme store ui", function() {
   it("should say sorry if they can't buy", function(done) {
     var browser = this.browser
     browser
-      .visit("http://localhost:9001/store")
+      .visit("http://localhost:9001/us/store")
       .then(function() {
         expect(browser).to.have.activePage("#buy")
         expect(browser).to.have.manyAlbums(11)

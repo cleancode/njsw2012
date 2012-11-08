@@ -30,7 +30,8 @@ $(function() {
     }
 
     var $form = $("#pay .pay_form")
-    $.post("/store/buy", $form.serialize())
+    var url = location.pathname + "/buy"
+    $.post(url, $form.serialize())
      .done(showThankyou)
      .fail(showSorry)
   })
