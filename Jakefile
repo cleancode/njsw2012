@@ -62,6 +62,18 @@ task("start", ["prepare"], {async: true}, function() {
   })
 })
 
+desc("start multiple servers with all dependencies")
+task("racket", ["prepare"], {async: true}, function() {
+  configure("./etc/conf.yml", function(err, conf) {
+    exec(forever(["start redis", "start shover 3", "list"], conf), function(error, stdout, stderr) {
+      process.stdout.write(stdout)
+      if (stderr.length > 0) console.error(stderr)
+      if (error !== null) fail(error)
+      complete()
+    })
+  })
+})
+
 desc("stop server and all dependencies")
 task("stop", {async: true}, function() {
   exec(forever(["stopall", "list"]), function(error, stdout, stderr) {
@@ -123,11 +135,19 @@ function forever(commands, conf) {
       case "start":
         switch (service) {
           case "shover":
-            return util.format(
-              "forever start -a -o %s -e %s --watch=true server.js",
-              path.join(PROJECT.logs_directory, "shower-stdout.log"),
-              path.join(PROJECT.logs_directory, "shower-stderr.log")
-            )
+            var clones = tokens.shift() || 1,
+              ports = _(clones).chain().range().reduce(function(ports, shift) {
+                return ports.concat(conf.http.port + shift)
+              }, []).value()
+
+            return _(ports).map(function(port) {
+              return util.format(
+                "forever start -a -o %s -e %s --watch=true server.js -p %d",
+                path.join(PROJECT.logs_directory, "shower-stdout.log"),
+                path.join(PROJECT.logs_directory, "shower-stderr.log"),
+                port
+              )
+            }).join("; ")
           case "redis":
             return util.format(
               "forever start -a -o %s -e %s -c redis-server %s",

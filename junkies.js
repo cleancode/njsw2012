@@ -17,6 +17,7 @@ var Junkie = (function(Junkie) {
     this.name = "junkie-" + this.id
     this.channel = "channel-" + (counter % conf.numberOfChannels)
     this.baseurl = util.format("http://%s:%d", conf.http.host, conf.http.port)
+    console.log(this.name, "server", this.baseurl)
   }
 
   Junkie.prototype = Object.create(require('events').EventEmitter.prototype)
@@ -37,7 +38,8 @@ var Junkie = (function(Junkie) {
   Junkie.prototype.deal = function(callback) {
     _(this).tap(function(junkie) {
       junkie.on(junkie.channel, function(message) {
-        if (message.from === junkie.id) {
+        console.log(junkie.name, "received message from", message.from)
+        if (message.from === junkie.name) {
           console.log(junkie.name, "received in", (microtime.now()-message.at)/1000, "ms")
           callback(null, junkie)
         }
@@ -45,7 +47,7 @@ var Junkie = (function(Junkie) {
       request.post(junkie.baseurl + "/channel/" + junkie.channel + "/events")
         .set("Content-Type", "application/json")
         .send({
-          from: junkie.id,
+          from: junkie.name,
           say: "Hello everybody",
           at: microtime.now()
         })
@@ -147,7 +149,8 @@ async.waterfall([
         return function(next) {
           return async.waterfall([
             function enter(next) {
-              (new Junkie(id, conf)).enter(next)
+              conf.http.port = _([9000,9001,9002]).chain().shuffle().first().value()
+              ;(new Junkie(id, conf)).enter(next)
             },
             function deal(junkie, next) {
               junkie.deal(next)
