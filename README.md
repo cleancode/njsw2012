@@ -64,8 +64,29 @@
 
 # 4 - ACME - branch/acme (15:30 - 17:30) - F
 
-* ?
+* connect/express module
+    * presentation
+    * technologies
+        * routing
+        * jade
+        * stylus
+    * a middleware based architecture
+    * building a middleware
+    * testing
+        * routes
+        * middlewares
+    * exercise: let's build a i18n store without
+      changing a line of code
 
+* testing web applications with zombie
+    * presentation
+    * the event loop
+    * better asynchronous programming
+    * exercise: read the source Luke
+
+* real time web applications
+  * pushing events with sockjs
+  * data real time visualization with d3
 
 # 5 - Q/A (17:30 - 18:30) - F
 
